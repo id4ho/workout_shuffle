@@ -32,4 +32,3 @@ module WorkoutShuffle
     end
   end
 end
-
