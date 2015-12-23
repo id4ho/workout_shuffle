@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222075410) do
+ActiveRecord::Schema.define(version: 20151222082610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,5 +30,16 @@ ActiveRecord::Schema.define(version: 20151222075410) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "muscle_targets", force: :cascade do |t|
+    t.integer  "muscle_group_id"
+    t.integer  "exercise_id"
+    t.boolean  "primary",         default: false, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "muscle_targets", ["exercise_id"], name: "index_muscle_targets_on_exercise_id", using: :btree
+  add_index "muscle_targets", ["muscle_group_id"], name: "index_muscle_targets_on_muscle_group_id", using: :btree
 
 end
