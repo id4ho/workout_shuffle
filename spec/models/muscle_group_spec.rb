@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe MuscleGroup, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "associations" do
+    it { should have_many(:muscle_targets) }
+    it { should have_many(:exercises).through(:muscle_targets) }
+  end
 end
