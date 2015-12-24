@@ -11,5 +11,4 @@ RSpec.describe Exercise, type: :model do
         .source(:muscle_group)
     end
   end
-
 end
