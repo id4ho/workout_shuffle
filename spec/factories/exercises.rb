@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :exercise do
-    name "MyString"
-description "MyText"
-sets 1
-reps 1
+    name "Squats"
+    description "Bend your knees till it hurts"
+    sets 2
+    reps 10
   end
-
 end
