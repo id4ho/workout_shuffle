@@ -28,7 +28,7 @@ group :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 3.0.0'
   gem 'faker'
   gem 'capybara'
   gem 'launchy'
