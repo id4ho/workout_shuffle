@@ -19,6 +19,10 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
+  <%= f.fields_for :primary_muscle_group do |builder| %>
+    <%= builder.label :primary_muscle_target %><br>
+    <%= builder.collection_select(:id, MuscleGroup.all, :id, :name, { prompt: "Select Muscle Group" }) %>
+  <% end %>
   <div class="field">
     <%= f.label :sets %><br>
     <%= f.number_field :sets %>

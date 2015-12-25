@@ -1,30 +1,28 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: [:show, :edit, :update, :destroy]
 
-  # GET /exercises
-  # GET /exercises.json
   def index
     @exercises = Exercise.all
   end
 
-  # GET /exercises/1
-  # GET /exercises/1.json
   def show
   end
 
-  # GET /exercises/new
   def new
     @exercise = Exercise.new
   end
 
-  # GET /exercises/1/edit
   def edit
   end
 
-  # POST /exercises
-  # POST /exercises.json
   def create
     @exercise = Exercise.new(exercise_params)
+    if params[:exercise][:primary_muscle_group]
+      @exercise.muscle_targets.build(
+        muscle_group_id: params[:exercise][:primary_muscle_group][:id],
+        primary: true
+      )
+    end
 
     respond_to do |format|
       if @exercise.save
@@ -37,8 +35,6 @@ class ExercisesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /exercises/1
-  # PATCH/PUT /exercises/1.json
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
@@ -51,8 +47,6 @@ class ExercisesController < ApplicationController
     end
   end
 
-  # DELETE /exercises/1
-  # DELETE /exercises/1.json
   def destroy
     @exercise.destroy
     respond_to do |format|
@@ -62,13 +56,12 @@ class ExercisesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exercise
-      @exercise = Exercise.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def exercise_params
-      params.require(:exercise).permit(:name, :description, :sets, :reps)
-    end
+  def set_exercise
+    @exercise = Exercise.find(params[:id])
+  end
+
+  def exercise_params
+    params.require(:exercise).permit(:name, :description, :sets, :reps)
+  end
 end

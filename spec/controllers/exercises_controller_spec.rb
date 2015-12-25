@@ -19,21 +19,14 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe ExercisesController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Exercise. As you add validations to Exercise, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: "Kettlebell Swings" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: "ab" }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ExercisesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
@@ -87,6 +80,22 @@ RSpec.describe ExercisesController, type: :controller do
       end
     end
 
+    context "with valid params and a primary muscle target" do
+      let(:primary_muscle_group_id) { create(:muscle_group).id }
+      let(:valid_attributes) {
+        {
+          name: "Curls", primary_muscle_group: { id: primary_muscle_group_id }
+        }
+      }
+
+      it "creates a new Exercise and MuscleTarget" do
+        expect {
+          post :create, {:exercise => valid_attributes}, valid_session
+        }.to change(Exercise, :count).by(1)
+        expect(Exercise.last.primary_muscle_group.id).to eq(primary_muscle_group_id)
+      end
+    end
+
     context "with invalid params" do
       it "assigns a newly created but unsaved exercise as @exercise" do
         post :create, {:exercise => invalid_attributes}, valid_session
@@ -103,14 +112,14 @@ RSpec.describe ExercisesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "super curls" }
       }
 
       it "updates the requested exercise" do
         exercise = Exercise.create! valid_attributes
         put :update, {:id => exercise.to_param, :exercise => new_attributes}, valid_session
         exercise.reload
-        skip("Add assertions for updated state")
+        expect(exercise.name).to eq("super curls")
       end
 
       it "assigns the requested exercise as @exercise" do
@@ -155,5 +164,4 @@ RSpec.describe ExercisesController, type: :controller do
       expect(response).to redirect_to(exercises_url)
     end
   end
-
 end
