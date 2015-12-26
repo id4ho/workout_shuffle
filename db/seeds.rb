@@ -36,7 +36,7 @@ exercises = [
     name: "Russian Twists",
     description: <<DESC,
 Sit on a mat or the floor with your legs together and your hips and knees both
-at a 90 degree angle. Slowly lift your feet of the ground balancing on your
+at a 90 degree angle. Slowly lift your feet off the ground balancing on your
 buttocks (you may cross your feet if you like). Then with hands together and
 rotate your torso so that your upper body faces the left (your elbow should
 rotate behind your back). Return to center and do the opposite side. Rotating
