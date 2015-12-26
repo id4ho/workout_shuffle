@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  #root 'about#index'
   resources :exercises
+  resources :exercises_cardio_exercise, controller: :exercises
+  resources :exercises_resistance_exercise, controller: :exercises
   resources :muscle_groups, only: :show
 end
