@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe MuscleTarget, type: :model do
+  context "validations" do
+    it { should validate_presence_of(:muscle_group) }
+    it { should validate_presence_of(:exercise) }
+  end
+
   context "associations" do
     it { should belong_to(:muscle_group) }
     it { should belong_to(:exercise) }

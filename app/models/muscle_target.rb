@@ -1,4 +1,7 @@
 class MuscleTarget < ActiveRecord::Base
+  validates_presence_of :muscle_group
+  validates_presence_of :exercise
+
   belongs_to :muscle_group
   belongs_to :exercise, inverse_of: :primary_target
 
