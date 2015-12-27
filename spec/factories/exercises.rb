@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :exercise do
+  factory :exercise, class: "Exercises::ResistanceExercise" do
     name "Squats"
     description "Bend your knees till it hurts"
     sets 2
