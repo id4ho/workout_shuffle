@@ -1,5 +1,7 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, except: [:show, :index]
+  before_action :require_admin_access, except: [:show, :index]
 
   def index
     @exercises = Exercise.all
