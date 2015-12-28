@@ -2,8 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Workout, type: :model do
   describe "associations" do
+    it do
+      should have_many(:exercise_assignments)
+        .inverse_of(:workout)
+        .dependent(:destroy)
+    end
+
     it { should belong_to(:user) }
-    it { should have_many(:exercise_assignments).inverse_of(:workout) }
     it { should have_many(:exercises).through(:exercise_assignments) }
   end
 
