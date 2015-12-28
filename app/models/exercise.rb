@@ -2,6 +2,7 @@ class Exercise < ActiveRecord::Base
   validates_length_of :name, minimum: 3
   validates_uniqueness_of :name
 
+  has_many :exercise_assignments, inverse_of: :exercise
   has_many :muscle_targets
   has_many :muscle_groups, through: :muscle_targets
   has_one :primary_target, -> { where(primary: true) },

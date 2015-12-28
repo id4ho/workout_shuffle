@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Exercise, type: :model do
   describe "associations" do
+    it { should have_many(:exercise_assignments).inverse_of(:exercise) }
     it { should have_many(:muscle_targets) }
     it { should have_many(:muscle_groups) }
     it { should have_one(:primary_target).conditions(primary: true) }
