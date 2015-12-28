@@ -35,11 +35,41 @@ RSpec.describe Exercise, type: :model do
     end
   end
 
-  describe "display_name" do
+  describe "#display_name" do
     it "should titleize the name string for display purposes" do
       exercise = create(:exercise, name: "awesome squats")
 
       expect(exercise.display_name).to eq("Awesome Squats")
+    end
+  end
+
+  describe ".random_with_distinct_primary" do
+    before do
+      @exercise1 = create(:exercise)
+      @exercise2 = create(:exercise, name: "lunges")
+      @exercise3 = create(:exercise, name: "curls")
+
+      muscle_group1 = create(:muscle_group)
+      muscle_group2 = create(:muscle_group, name: "glutes")
+
+      @exercise1.muscle_targets.create(muscle_group: muscle_group1)
+      @exercise2.muscle_targets.create(muscle_group: muscle_group1)
+      @exercise3.muscle_targets.create(muscle_group: muscle_group2)
+
+      expect(described_class).to receive(:includes)
+        .with(:primary_muscle_group) {
+        double(shuffle: [@exercise1, @exercise2, @exercise3])
+      }
+    end
+
+    it "returns exercises pointing to different primary muscle groups" do
+      expect(described_class.random_with_distinct_primary(2)).to eq(
+        [@exercise2, @exercise3]
+      )
+    end
+
+    it "returns the number of exercises requested" do
+      expect(described_class.random_with_distinct_primary(2).length).to eq(2)
     end
   end
 end
