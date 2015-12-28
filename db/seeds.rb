@@ -247,7 +247,8 @@ exercises.each do |e_hash|
     description: e_hash[:description],
     sets: e_hash[:sets],
     reps: e_hash[:reps],
-    duration: e_hash[:duration]
+    duration: e_hash[:duration],
+    type: e_hash[:type] || "Exercises::ResistanceExercise"
   )
 
   e_hash[:muscle_groups].each do |mg_name|
