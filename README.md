@@ -28,13 +28,7 @@ this time)
 #### TO DO:
 - the 403 returned when someone requests something they don't have access to
   needs to have a form and a friendlier message
-- the workout form is a little weird.. i want to generate the model but then do
-  an ajax call to submit it.. it may be better to have a hidden form and adjust
-  the parameters for that hidden form when the user swaps out exercises. this
-  would also solve the multiple response types for the WorkoutController#create
-  action
-- the createWorkoutPage.js needs capybara coverage and many some unit tests
-  through jasmine as well
+- the createWorkoutPage.js needs capybara coverage and maybe some jasmine unit tests
 - Allow exercises to have more than one primary muscle target (squats for
   instance need more than 1)
 - Make better use of FactoryGirl, figure out how to set up a lot of data quickly
