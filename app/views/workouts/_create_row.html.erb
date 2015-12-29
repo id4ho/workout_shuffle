@@ -2,7 +2,7 @@
   <td><%= exercise.display_name %></td>
   <td><%= exercise.sets %></td>
   <td><%= exercise.reps %></td>
-  <td><%= exercise.duration %></td>
+  <td><%= exercise.display_duration %></td>
   <% unless exercise.type == "Exercises::CardioExercise" %>
     <td><a href="#" class="swap-exercise-link">Swap</a></td>
   <% end %>

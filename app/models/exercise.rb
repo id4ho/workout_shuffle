@@ -34,4 +34,12 @@ class Exercise < ActiveRecord::Base
   def display_name
     name.titleize
   end
+
+  def display_duration
+    if duration
+      minutes = duration / 60.0
+      minutes = minutes.to_i if duration % 60 == 0
+      "#{ minutes } mins"
+    end
+  end
 end
