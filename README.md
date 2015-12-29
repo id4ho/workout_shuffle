@@ -33,3 +33,4 @@ this time)
   instance need more than 1)
 - Make better use of FactoryGirl, figure out how to set up a lot of data quickly
   when needed
+- Add index and show for MuscleGroup
