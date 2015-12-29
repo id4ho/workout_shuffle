@@ -1,33 +1,57 @@
 <h1>Your New Shuffled Workout</h1>
 
-<table id='workout-create-table'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Sets</th>
-      <th>Reps</th>
-      <th>Duration</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
+<%= form_for @workout do |f| %>
+  <% if @workout.errors.any? %>
+    <div id="error_explanation">
+      <h4>
+        <%= pluralize(@workout.errors.count, "error") %> prohibited this exercise from being saved:
+      </h4>
 
-  <tbody>
-    <% @workout.exercises.each do |exercise| %>
-      <%= render 'create_row', exercise: exercise, swap_row: false %>
-    <% end %>
-    <% @swaps.each do |swap| %>
-      <%= render 'create_row', exercise: swap, swap_row: true %>
-    <% end %>
-  </tbody>
-</table>
+      <ul>
+        <% @workout.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<p class="container">
-  You can swap
-  <span id="swap-count"><%= pluralize(@swaps.length, 'exercise') %></span>
-  if you'd like
-</p>
+  <div class="field">
+    <%= f.label :workout_name %>
+    <%= f.text_field :name, placeholder: 'Your Workout Name' %>
+  </div>
 
-<button id="create-workout" class="btn btn-primary">Create Workout</button>
+  <table id='workout-create-table'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Duration</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @workout.exercises.each do |exercise| %>
+        <%= render 'create_row', exercise: exercise, swap_row: false %>
+      <% end %>
+
+      <% @swaps.each do |swap| %>
+        <%= render 'create_row', exercise: swap, swap_row: true %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p class="container">
+    You can swap
+    <span id="swap-count"><%= pluralize(@swaps.length, 'exercise') %></span>
+    if you'd like
+  </p>
+
+  <div class="actions">
+    <%= f.submit 'Create Workout', id: 'create-workout', class: 'btn btn-primary' %>
+  </div>
+<% end %>
 
 <script>
   $(function () {

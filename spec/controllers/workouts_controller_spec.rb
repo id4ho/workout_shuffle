@@ -82,29 +82,54 @@ RSpec.describe WorkoutsController, type: :controller do
         user = create(:user)
         sign_in_as(user)
         expect {
-          post :create, { workout: { name: "new_workout" },
-                          exercise_ids: @exercise_ids }
+          post :create, {
+            workout: { name: "new_workout", exercise_ids: @exercise_ids }
+          }
         }.to change(user.workouts, :count).by(1)
       end
 
-      it "redirects via js to the new workout's path" do
+      it "links the submited exercise_ids to the newly created workout" do
         sign_in
-        post :create, { workout: { name: "new_workout" },
-                        exercise_ids: @exercise_ids }
-        expect(response.content_type).to eq(Mime::JS)
-        expect(response.body).to eq(
-          "window.location = '#{ workout_path(Workout.last.to_param) }'"
-        )
+        post :create, {
+          workout: { name: "new_workout", exercise_ids: @exercise_ids }
+        }
+        expect(Workout.last.exercises.map(&:id)).to eq(@exercise_ids)
+      end
+
+      it "redirects to the created workout" do
+        sign_in
+        post :create, {
+          workout: { name: "new_workout", exercise_ids: @exercise_ids }
+        }
+        expect(response).to redirect_to(workout_path(Workout.last.to_param))
       end
     end
 
-    context "when the save is successful" do
-      it "renders the full error messages in json" do
+    context "when the save is unsuccessful" do
+      def unsuccessful_request(options = {})
         old_workout = create(:workout)
         sign_in_as(old_workout.user)
-        post :create, { workout: { name: old_workout.name },
-                        exercise_ids: @exercise_ids }
-        expect(response.body).to match(/Name has already been taken/)
+        params = {
+          workout: { name: old_workout.name, exercise_ids: @exercise_ids }
+        }
+        post :create, params.merge(options)
+      end
+
+      it "assigns any swap_ids sent back up to @swaps" do
+        swap = create(:exercise, name: "swap exercise")
+
+        unsuccessful_request(swap_ids: [swap.id])
+        expect(assigns(:swaps)).to eq([swap])
+      end
+
+      it "assigns a newly created but unsaved workout as @workout" do
+        unsuccessful_request
+        expect(assigns(:workout)).to be_a_new(Workout)
+      end
+
+      it "re-renders the 'new' template" do
+        unsuccessful_request
+        expect(response).to render_template("new")
       end
     end
   end

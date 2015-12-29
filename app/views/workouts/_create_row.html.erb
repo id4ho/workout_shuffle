@@ -1,4 +1,8 @@
 <tr class='exercise-row' <%= 'hidden' if swap_row %> data-id="<%= exercise.id %>">
+  <input type="hidden"
+         name="<%= swap_row ? 'swap_ids[]' : 'workout[exercise_ids][]' %>"
+         value=<%= exercise.id %>
+         class="exercise-id-field"/>
   <td><%= exercise.display_name %></td>
   <td><%= exercise.sets %></td>
   <td><%= exercise.reps %></td>

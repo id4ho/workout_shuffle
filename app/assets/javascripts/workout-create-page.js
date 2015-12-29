@@ -1,21 +1,8 @@
 var workoutCreatePage = {
   init: function(options) {
-    this.submitPath = options.submitPath;
+    this.checkSwaps();
+    this.updateSwapsLeftMessage();
     $('.swap-exercise-link').on('click', this.replaceExerciseAndCheckSwaps);
-    $('#create-workout').on('click', this.submitExercise);
-  },
-
-  submitExercise: function() {
-    var exerciseList = workoutCreatePage.getExerciseIds();
-
-    $.ajax({
-      url: workoutCreatePage.submitPath,
-      method: 'POST',
-      data: {
-        'workout': { 'name': 'whatever5' },
-        'exercise_ids': exerciseList
-      }
-    });
   },
 
   replaceExerciseAndCheckSwaps(event) {
@@ -23,19 +10,12 @@ var workoutCreatePage = {
     workoutCreatePage.checkSwaps();
   },
 
-  getExerciseIds: function() {
-    return $('.exercise-row').toArray().map(function(exercise) {
-      if (!exercise.hidden) {
-        return exercise.getAttribute('data-id');
-      }
-    }).filter(Boolean); // filters the undefineds
-  },
-
   replaceExercise: function(event) {
     var targetRow = $(event.target).parents('.exercise-row')
     var swapRow = $(this.nextSwapRow());
 
     this.swapRows(targetRow, swapRow);
+    this.updateHiddenInput(swapRow);
     this.updateSwapsLeftMessage();
   },
 
@@ -44,6 +24,10 @@ var workoutCreatePage = {
 
     this.placeRowAtIndex(newRow, rowIndex);
     rowToBeReplaced.remove();
+  },
+
+  updateHiddenInput: function(newRow) {
+    newRow.children('input').prop('name', 'workout[exercise_ids][]')
   },
 
   checkSwaps: function() {

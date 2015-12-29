@@ -16,13 +16,13 @@ class WorkoutsController < ApplicationController
   end
 
   def create
-    workout = current_user.workouts.new(workout_params)
-    workout.exercises << Exercise.where(id: params[:exercise_ids])
+    @workout = current_user.workouts.new(workout_params)
 
-    if workout.save
-      render js: "window.location = '#{ workout_path(workout.to_param) }'"
+    if @workout.save
+      redirect_to @workout, notice: 'Workout was successfully created.'
     else
-      render json: workout.errors.full_messages.to_json
+      @swaps = Exercise.where(id: params[:swap_ids])
+      render :new
     end
   end
 
@@ -41,7 +41,7 @@ class WorkoutsController < ApplicationController
   end
 
   def workout_params
-    params.require(:workout).permit(:name)
+    params.require(:workout).permit(:name, exercise_ids: [])
   end
 
   def set_workout
