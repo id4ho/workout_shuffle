@@ -36,10 +36,13 @@ class Exercise < ActiveRecord::Base
   end
 
   def display_duration
-    if duration
+    return duration unless duration
+
+    if duration < 60
+      "#{ duration } seconds"
+    else
       minutes = duration / 60.0
-      minutes = minutes.to_i if duration % 60 == 0
-      "#{ minutes } mins"
+      "#{ minutes.round(1) } mins"
     end
   end
 end

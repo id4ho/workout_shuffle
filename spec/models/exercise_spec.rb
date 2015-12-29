@@ -53,22 +53,29 @@ RSpec.describe Exercise, type: :model do
       it "returns the duration in minutes" do
         exercise = create(:cardio_exercise)
         expect(exercise.duration).to eq(300)
-        expect(exercise.display_duration).to eq("5 mins")
+        expect(exercise.display_duration).to eq("5.0 mins")
       end
     end
 
-    context "when duration doesn't evenly divides into 60" do
+    context "when duration doesn't evenly divide into 60" do
       it "returns the duration in minutes with decimal fraction" do
-        exercise = create(:cardio_exercise)
-        exercise.duration = 330
-        expect(exercise.display_duration).to eq("5.5 mins")
+        exercise = create(:exercise)
+        exercise.duration = 320
+        expect(exercise.display_duration).to eq("5.3 mins")
+      end
+    end
+
+    context "when duration is less than 60" do
+      it "returns the duration in minutes with decimal fraction" do
+        exercise = create(:exercise)
+        exercise.duration = 40
+        expect(exercise.display_duration).to eq("40 seconds")
       end
     end
 
     context "when duration is nil" do
       it "returns nil" do
-        exercise = create(:cardio_exercise)
-        exercise.duration = nil
+        exercise = create(:exercise)
         expect(exercise.display_duration).to be_nil
       end
     end
