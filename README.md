@@ -25,8 +25,7 @@ out for another random exercise (only `ResistanceExercise`s may be swapped at
 this time)
 
 
-TO DO:
-There are many little missing features at the moment:
+#### TO DO:
 - the 403 returned when someone requests something they don't have access to
   needs to have a form and a friendlier message
 - the workout form is a little weird.. i want to generate the model but then do
