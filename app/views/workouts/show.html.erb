@@ -1,0 +1,27 @@
+<h1>Your <%= @workout.name %> Workout</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sets</th>
+      <th>Reps</th>
+      <th>Duration</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workout.exercises.each do |exercise| %>
+      <tr data-id="<%= exercise.id %>">
+        <td><%= exercise.display_name %></td>
+        <td><%= exercise.sets %></td>
+        <td><%= exercise.reps %></td>
+        <td><%= exercise.duration %></td>
+        <td><%= link_to 'Show', exercise %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', workouts_path %>

@@ -1,4 +1,6 @@
 class Workout < ActiveRecord::Base
+  STANDARD_SIZE = 7
+
   belongs_to :user
   has_many :exercise_assignments, dependent: :destroy, inverse_of: :workout
   has_many :exercises, through: :exercise_assignments

@@ -1,0 +1,36 @@
+<h1>Your New Shuffled Workout</h1>
+
+<table id='workout-create-table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sets</th>
+      <th>Reps</th>
+      <th>Duration</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workout.exercises.each do |exercise| %>
+      <%= render 'create_row', exercise: exercise, swap_row: false %>
+    <% end %>
+    <% @swaps.each do |swap| %>
+      <%= render 'create_row', exercise: swap, swap_row: true %>
+    <% end %>
+  </tbody>
+</table>
+
+<p class="container">
+  You can swap
+  <span id="swap-count"><%= pluralize(@swaps.length, 'exercise') %></span>
+  if you'd like
+</p>
+
+<button id="create-workout" class="btn btn-primary">Create Workout</button>
+
+<script>
+  $(function () {
+    workoutCreatePage.init({ submitPath: "<%= workouts_url %>" })
+  });
+</script>
